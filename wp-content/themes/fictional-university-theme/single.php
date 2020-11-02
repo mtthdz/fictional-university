@@ -3,6 +3,8 @@
 
 <?php 
 
+  get_header();
+
   // wordpress specific parameter
   while(have_posts()) {
     // wordpress specific function to get all info of the next post
@@ -11,4 +13,5 @@
     <?php the_content(); ?>
   <?php }
 
+  get_footer();
 ?>

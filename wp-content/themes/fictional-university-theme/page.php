@@ -1,6 +1,7 @@
 <!-- this is a page, not a post -->
 
 <?php 
+  get_header();
 
   // wordpress specific parameter
   while(have_posts()) {
@@ -10,4 +11,5 @@
     <?php the_content(); ?>
   <?php }
 
+  get_footer();
 ?>
