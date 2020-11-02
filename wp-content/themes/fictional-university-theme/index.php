@@ -1,14 +1,13 @@
-<?php
+<?php 
 
-function greet($name, $colour) {
-  echo "<p>Hi, my name is $name and my favourite colour is $colour.</p>";
+  $names = array("Matt", "Jane", "John");
+  $count = 0;
 
-}
+  while($count < count($names)) {
+    echo "<li>Hi, my name is $names[$count] </li>";
+    $count++;
+  }
 
-greet("John", "blue");
-greet("Jane", "green");
 
 ?>
-<!-- bloginfo is a built in wordpress fn -->
-<h1><?php bloginfo('name'); ?></h1>
-<p><?php bloginfo('description'); ?></p>
+
