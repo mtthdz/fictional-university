@@ -11,7 +11,7 @@ function university_files() {
 
 function university_features() {
   // how to add menu options to wordpress admin
-  register_nav_menu('headerMenuLocation', 'header Menu Location');
+  // register_nav_menu('headerMenuLocation', 'header Menu Location');
   add_theme_support('title-tag');
 }
 
