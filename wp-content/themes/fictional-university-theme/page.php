@@ -22,7 +22,6 @@
 
       <?php
         $theParent = wp_get_post_parent_id(get_the_ID());
-
         if ($theParent) { ?>
           <div class="metabox metabox--position-up metabox--with-home-link">
             <p>
