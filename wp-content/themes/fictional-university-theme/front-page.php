@@ -66,7 +66,7 @@
             <?php } wp_reset_postdata(); // cleans up using custom query; not necessary, but good habits when using multiple queries
           ?>
 
-          <p class="t-center no-margin"><a href="#" class="btn btn--yellow">View All Blog Posts</a></p>
+          <p class="t-center no-margin"><a href="<?php echo site_url('/blog') ?>" class="btn btn--yellow">View All Blog Posts</a></p>
         </div>
       </div>
     </div>
