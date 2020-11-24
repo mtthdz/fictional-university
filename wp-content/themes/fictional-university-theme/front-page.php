@@ -17,13 +17,28 @@
           <h2 class="headline headline--small-plus t-center">Upcoming Events</h2>
 
           <?php
+            $today = date('Ymd');
             $homepageEvents = new WP_Query(array(
-              'posts_per_page' => 2,
-              'post_type' => 'event'
+              // setting -1 will load ALL posts
+              'posts_per_page' => -1,
+              'post_type' => 'event',
+              'meta_key' => 'event_date',
+              // you need to declare meta_key to use meta_value
+              'orderby' => 'meta_value_num',
+              'order' => 'ASC', // or DESC for descending
+              'meta_query' => array(
+                array(
+                  'key' => 'event_date',
+                  'compare' => '>=',
+                  'value' => $today,
+                  'type' => 'numeric'
+                )
+              )
             ));
 
             while($homepageEvents->have_posts()) {
-              $homepageEvents->the_post(); // get all event posts loaded ?>
+              // get all event posts loaded 
+              $homepageEvents->the_post();?>
               <div class="event-summary">
                 <a class="event-summary__date t-center" href="#">
                   <span class="event-summary__month">
