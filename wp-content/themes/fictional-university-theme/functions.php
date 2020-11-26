@@ -24,9 +24,29 @@ function university_features() {
   add_theme_support('title-tag');
 }
 
+function university_adjust_queries($query) {
+  // the third conditional will make sure we're not messing with a custom query
+  if(!is_admin() AND is_post_type_archive('event') AND $query->is_main_query()) {
+    $today = date('Ymd');
+    $query->set('meta_key', 'event_date');
+    $query->set('orderby', 'meta_value_num');
+    $query->set('order', 'ASC');
+    $query->set('meta_query', array(
+      array(
+        'key' => 'event_date',
+        'compare' => '>=',
+        'value' => $today,
+        'type' => 'numeric'
+      ))
+    );
+  }
+}
+
+
 
 // parameters: first when to call the fn, and then the fn
 // we dont use () for university_files because we're not running it here and now
 // php will handle the fn run
 add_action('wp_enqueue_scripts', 'university_files');
 add_action('after_setup_theme', 'university_features');
+add_action('pre_get_posts', 'university_adjust_queries');
