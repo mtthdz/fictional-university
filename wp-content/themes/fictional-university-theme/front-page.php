@@ -20,7 +20,7 @@
             $today = date('Ymd');
             $homepageEvents = new WP_Query(array(
               // setting -1 will load ALL posts
-              'posts_per_page' => -1,
+              'posts_per_page' => 2,
               'post_type' => 'event',
               'meta_key' => 'event_date',
               // you need to declare meta_key to use meta_value
