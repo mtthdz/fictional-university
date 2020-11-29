@@ -45,7 +45,7 @@ function university_post_types() {
   register_post_type('professor', array(
     // we need to add rest api as the new block editor uses js; without this, we'd have the classic block editor
     'show_in_rest' => true, 
-    'supports' => array('title', 'editor'),
+    'supports' => array('title', 'editor', 'thumbnail'),
     'public' => true,
     'labels' => array(
       'name' => 'Professors',
