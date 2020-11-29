@@ -31,6 +31,38 @@
       <div class="generic-content"><?php the_content(); ?></div>
 
       <?php
+      // professors query
+        $relatedProfessors = new WP_Query(array(
+          // setting -1 will load ALL posts
+          'posts_per_page' => -1,
+          'post_type' => 'professor',
+          'orderby' => 'title',
+          'order' => 'ASC', // or DESC for descending
+          'meta_query' => array(
+            array(
+              'key' => 'related_programs',
+              'compare' => 'LIKE',
+              'value' => '"' . get_the_ID() . '"'
+            )
+          )
+        ));
+
+        if($relatedProfessors->have_posts()) {
+          echo '<hr class="section-break">';
+          echo '<h2 class="headline headline--medium">' . get_the_title() . ' Professors</h2>';
+
+          while($relatedProfessors->have_posts()) {
+            // get all event posts loaded 
+            $relatedProfessors->the_post();?>
+            <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+          <?php }          
+        }
+        // we need this fn to reset the global post object, ie. the get_the_ID() fn
+        // we need to reset as we change the global post object when using the ID function for the professors query
+        // resetting the global post object will change the ID back to the page ID
+        wp_reset_postdata();
+        
+        // events query
         $today = date('Ymd');
         $homepageEvents = new WP_Query(array(
           // setting -1 will load ALL posts
