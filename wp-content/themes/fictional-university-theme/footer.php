@@ -59,6 +59,16 @@
   </div>
 </footer>
 
+<div class="search-overlay">
+  <div class="search-overlay__top">
+    <div class="container">
+      <i class="fa fa-search search-overlay__icon" aria-hidden="true"></i>
+      <input type="text" class="search-term" id="search-term" placeholder="what are you looking for?">
+      <i class="fa fa-window-close search-overlay__close" aria-hidden="true"></i>
+    </div>
+  </div>
+</div>
+
 <!-- pulls in wp admin panel -->
 <?php wp_footer(); ?>
 </body>
