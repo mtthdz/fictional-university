@@ -7,19 +7,10 @@
   // wordpress specific parameter
   while(have_posts()) {
     // wordpress specific function to get all info of the next post
-    the_post(); ?>
-    <div class="page-banner">
-      <div 
-        class="page-banner__bg-image" 
-        style="background-image: url(<?php $pageBannerImage = get_field('page_banner_background_image'); echo $pageBannerImage['url']; ?>);">
-      </div>
-      <div class="page-banner__content container container--narrow">
-        <h1 class="page-banner__title"><?php the_title(); ?></h1>
-        <div class="page-banner__intro">
-          <p><?php the_field('page_banner_subtitle'); ?></p>
-        </div>
-      </div>  
-    </div>   
+    the_post(); 
+    pageBanner();
+    ?>
+       
 
     <div class="container container--narrow page-section">
       <div class="generic-content">
