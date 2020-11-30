@@ -5,8 +5,10 @@ class Search {
     this.openButton = $('.js-search-trigger');
     this.closeButton = $('.search-overlay__close');
     this.searchOverlay = $('.search-overlay');
+    this.searchField = $('#search-term');
     this.events();
     this.isOverlayOpen = false;
+    this.typingTimer;
   }
 
   // events
@@ -16,6 +18,7 @@ class Search {
     this.openButton.on('click', this.openOverlay.bind(this));
     this.closeButton.on('click', this.closeOverlay.bind(this));
     $(document).on('keydown', this.keyPressDispatcher.bind(this));
+    this.searchField.on('keydown', this.typingLogic.bind(this));
   }
 
   // methods
@@ -37,6 +40,15 @@ class Search {
     } else if(e.keyCode === 27 && this.isOverlayOpen) {
       this.closeOverlay();
     }
+  }
+
+  typingLogic() {
+    // this will make the timer count only when the last key was pressed
+    // this will prevent auto searching every keypress event
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(function() {
+      console.log('nice');
+    }, 1000);
   }
 }
 
