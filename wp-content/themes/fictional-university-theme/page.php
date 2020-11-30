@@ -7,7 +7,10 @@
   while(have_posts()) {
     // wordpress specific function to get all info of the next post
     the_post(); 
-    pageBanner();
+    pageBanner(array(
+      'title' => 'Hello there',
+      'subtitle' => 'hi this is the subtitle'
+    ));
     ?>
 
     <div class="container container--narrow page-section">
