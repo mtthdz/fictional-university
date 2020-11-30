@@ -6,8 +6,11 @@ class Search {
     this.closeButton = $('.search-overlay__close');
     this.searchOverlay = $('.search-overlay');
     this.searchField = $('#search-term');
+    this.resultsDiv = $('#search-overlay__results');
     this.events();
     this.isOverlayOpen = false;
+    this.isSpinnerVisible = false;
+    this.previousValue;
     this.typingTimer;
   }
 
@@ -18,7 +21,7 @@ class Search {
     this.openButton.on('click', this.openOverlay.bind(this));
     this.closeButton.on('click', this.closeOverlay.bind(this));
     $(document).on('keydown', this.keyPressDispatcher.bind(this));
-    this.searchField.on('keydown', this.typingLogic.bind(this));
+    this.searchField.on('keyup', this.typingLogic.bind(this));
   }
 
   // methods
@@ -35,7 +38,9 @@ class Search {
   }
 
   keyPressDispatcher(e) {
-    if(e.keyCode === 83 && !this.isOverlayOpen) {
+    // checking for open overlay will prevent it multiple keypresses triggering the fn
+    // checking for other inputs/textareas will prevent searching in the wrong input/textarea
+    if(e.keyCode === 83 && !this.isOverlayOpen && !$('input, textarea').is(':focus')) {
       this.openOverlay();
     } else if(e.keyCode === 27 && this.isOverlayOpen) {
       this.closeOverlay();
@@ -43,12 +48,32 @@ class Search {
   }
 
   typingLogic() {
-    // this will make the timer count only when the last key was pressed
-    // this will prevent auto searching every keypress event
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(function() {
-      console.log('nice');
-    }, 1000);
+    if(this.searchField.val() != this.previousValue) {
+      // this will make the timer count only when the last key was pressed
+      // this will prevent auto searching every keypress event
+      clearTimeout(this.typingTimer);
+
+
+      // else: if search field is empty, don't search, remove spinner
+      // this will prevent us from calling to wordpress with a blank search bar
+      if(this.searchField.val()) {
+        if (!this.isSpinnerVisible) {
+          this.resultsDiv.html('<div class="spinner-loader"></div>')
+          this.isSpinnerVisible = true;
+        }
+        this.typingTimer = setTimeout(this.getResults.bind(this), 1000);
+      } else {
+        this.resultsDiv.html('');
+        this.isSpinnerVisible = false;
+      }
+    }
+
+    this.previousValue = this.searchField.val();
+  }
+
+  getResults() {
+    this.resultsDiv.html('image real search results here');
+    this.isSpinnerVisible = false;
   }
 }
 
