@@ -7,11 +7,7 @@
   while(have_posts()) {
     // wordpress specific function to get all info of the next post
     the_post(); 
-    pageBanner(array(
-      'title' => 'Hello there',
-      'subtitle' => 'hi this is the subtitle',
-      'photo' => 'https://images.unsplash.com/photo-1544531585-f14f463149ec?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2850&q=80'
-    ));
+    pageBanner();
     ?>
 
     <div class="container container--narrow page-section">

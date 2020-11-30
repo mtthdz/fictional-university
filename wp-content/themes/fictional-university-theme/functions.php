@@ -1,6 +1,7 @@
 <?php 
 
-function pageBanner($args) {
+// setting parameter to null will make it optional
+function pageBanner($args = NULL) {
   if(!$args['title']) {
     $args['title'] = get_the_title();
   }
