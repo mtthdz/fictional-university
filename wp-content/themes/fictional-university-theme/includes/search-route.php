@@ -13,7 +13,7 @@ function universitySearchResults($data) {
     'post_type' => 'professor',
     // s is for search
     // $data is what the user is looking up in the search bar
-    's' => $data['term'] 
+    's' => sanitize_text_field($data['term'])
   ));
 
   $professorResults = array();
