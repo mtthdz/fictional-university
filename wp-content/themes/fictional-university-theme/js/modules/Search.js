@@ -2,6 +2,8 @@ import $ from 'jquery';
 
 class Search {
   constructor() {
+    // call this so the user can search
+    this.addSearchHTML();
     this.openButton = $('.js-search-trigger');
     this.closeButton = $('.search-overlay__close');
     this.searchOverlay = $('.search-overlay');
@@ -72,14 +74,34 @@ class Search {
   }
 
   getResults() {
-    $.getJSON('http://fictional-university.local/wp-json/wp/v2/posts?search=' + this.searchField.val(), (posts) => {
+    $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), (posts) => {
       this.resultsDiv.html(`
         <h2 class="search-overlay__section-title">General Information</h2>
-        <ul class="link-list min-list">
-          ${posts.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
-        </ul>
+        ${posts.length ? '<ul class="link-list min-list">' : '<p>No results found.</p>'}
+        ${posts.map(item => `<li><a href=${item.link}>${item.title.rendered}</a></li>`).join('')}
+        ${posts.length ? '</ul>' : ''}
       `);
+
+      this.isSpinnerVisible = false;
     });
+  }
+
+  addSearchHTML() {
+    $('body').append(`
+      <div class="search-overlay">
+        <div class="search-overlay__top">
+          <div class="container">
+            <i class="fa fa-search search-overlay__icon" aria-hidden="true"></i>
+            <input type="text" class="search-term" id="search-term" placeholder="what are you looking for?">
+            <i class="fa fa-window-close search-overlay__close" aria-hidden="true"></i>
+          </div>
+        </div>
+
+        <div class="container">
+          <div id="search-overlay__results"></div>
+        </div>
+      </div>    
+    `);
   }
 }
 
