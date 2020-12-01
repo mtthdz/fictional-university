@@ -80,20 +80,22 @@ class Search {
       $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()), 
       $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()))
       .then((posts, pages) => {
-      const combinedResults = posts[0].concat(pages[0]);
-      
-      this.resultsDiv.html(`
-        <h2 class="search-overlay__section-title">General Information</h2>
-        ${combinedResults.length ? '<ul class="link-list min-list">' : '<p>No results found.</p>'}
-        ${combinedResults.map(item => {`<li><a href=${item.link}>${item.title.rendered}</a></li>`}).join('')}
-        ${combinedResults.length ? '</ul>' : ''}
-      `);
+        const combinedResults = posts[0].concat(pages[0]);
+        
+        this.resultsDiv.html(`
+          <h2 class="search-overlay__section-title">General Information</h2>
+          ${combinedResults.length ? '<ul class="link-list min-list">' : '<p>No results found.</p>'}
+          ${combinedResults.map(item => {`<li><a href=${item.link}>${item.title.rendered}</a></li>`}).join('')}
+          ${combinedResults.length ? '</ul>' : ''}
+        `);
 
-      this.isSpinnerVisible = false;
-    }, () => {
-      // error handle for improper url
-      this.resultsDiv.html('<p>Unexpected error; please try again.</p>');
-    });
+        this.isSpinnerVisible = false;
+      }, 
+      () => {
+        // error handle for improper url
+        this.resultsDiv.html('<p>Unexpected error; please try again.</p>');
+      }
+    );
   }
 
   addSearchHTML() {

@@ -1,5 +1,7 @@
 <?php 
 
+
+
 // setting parameter to null will make it optionalp
 function pageBanner($args = NULL) {
   if(!$args['title']) {
@@ -47,8 +49,8 @@ function university_files() {
     wp_enqueue_script('main-university-js', 'http://localhost:3000/bundled.js', NULL, '1.0', true);
   } else {
     wp_enqueue_script('our-vendors-js', get_theme_file_uri('/bundled-assets/vendors~scripts.9678b4003190d41dd438.js'), NULL, '1.0', true);
-    wp_enqueue_script('main-university-js', get_theme_file_uri('/bundled-assets/scripts.42adbce33480291d31dc.js'), NULL, '1.0', true);
-    wp_enqueue_style('our-main-styles', get_theme_file_uri('/bundled-assets/styles.42adbce33480291d31dc.css'));
+    wp_enqueue_script('main-university-js', get_theme_file_uri('/bundled-assets/scripts.b259c4b006fbff60a715.js'), NULL, '1.0', true);
+    wp_enqueue_style('our-main-styles', get_theme_file_uri('/bundled-assets/styles.b259c4b006fbff60a715.css'));
   }
 
   // for REST API call
@@ -92,6 +94,11 @@ function university_adjust_queries($query) {
   }
 }
 
+function university_custom_rest() {
+  register_rest_field('post', 'authorName', array(
+    'get_callback' => function() {return get_the_author();}
+  ));
+}
 
 
 // parameters: first when to call the fn, and then the fn
@@ -100,3 +107,4 @@ function university_adjust_queries($query) {
 add_action('wp_enqueue_scripts', 'university_files');
 add_action('after_setup_theme', 'university_features');
 add_action('pre_get_posts', 'university_adjust_queries');
+add_action('rest_api_init', 'university_custom_rest');
