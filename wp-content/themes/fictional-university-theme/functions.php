@@ -1,6 +1,7 @@
 <?php 
 
-
+// how to add in php module
+require get_theme_file_path('/includes/search-route.php');
 
 // setting parameter to null will make it optionalp
 function pageBanner($args = NULL) {
