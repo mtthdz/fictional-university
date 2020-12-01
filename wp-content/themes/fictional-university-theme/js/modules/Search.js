@@ -78,24 +78,31 @@ class Search {
   getResults() {
     $.getJSON(universityData.root_url + '/wp-json/university/v1/search?term=' + this.searchField.val(), (results) => {
       this.resultsDiv.html(`
-        <div class="row>
-          <div class="one-third>
+        <div class="row">
+          <div class="one-third">
             <h2 class="search-overlay__section-title">General Information</h2>
             ${results.generalInfo.length ? '<ul class="link-list min-list">' : '<p>No results found.</p>'}
-            ${results.generalInfo.map(item => `<li><a href=${item.link}>${item.title.rendered}</a>${item.type === 'post' ? `by ${item.authorName}` : ''}</li>`).join('')}
+              ${results.generalInfo.map(item => `<li><a href=${item.link}>${item.title}</a>${item.postType === 'post' ? ` by ${item.authorName}` : ''}</li>`).join('')}
             ${results.generalInfo.length ? '</ul>' : '' }
           </div>
 
-          <div class="one-third>
-            <h2 class="search-overlay__section-title">Programs</h2>
+          <div class="one-third">
+            <h2 class="search-overlay__section-title"Programs></h2>
+            ${results.programs.length ? '<ul class="link-list min-list">' : '<p>No results found.</p>'}
+              ${results.programs.map(item => `<li><a href=${item.link}>${item.title}</a></li>`).join('')}
+            ${results.programs.length ? '</ul>' : '' }
             <h2 class="search-overlay__section-title">Professors</h2>
+
           </div>
 
-          <div class="one-third>
+          <div class="one-third">
             <h2 class="search-overlay__section-title">Events</h2>
+
           </div>
         </div>
       `);
+
+      this.isSpinnerVisible = false;
     });
   }
 
