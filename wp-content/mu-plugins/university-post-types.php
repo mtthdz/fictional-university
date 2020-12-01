@@ -26,7 +26,7 @@ function university_post_types() {
   register_post_type('program', array(
     // we need to add rest api as the new block editor uses js; without this, we'd have the classic block editor
     'show_in_rest' => true, 
-    'supports' => array('title', 'editor'),
+    'supports' => array('title'),
     'rewrite' => array('slug' => 'programs'),
     'has_archive' => true,
     'public' => true,
