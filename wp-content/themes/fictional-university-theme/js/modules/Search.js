@@ -33,6 +33,7 @@ class Search {
     this.searchField.val(''); // set search bar blank everytime overlay is opened
     setTimeout(() => this.searchField.focus(), 301); // automatically focus on textfield when open
     this.isOverlayOpen = true;
+    return false;
   }
 
   closeOverlay() {
