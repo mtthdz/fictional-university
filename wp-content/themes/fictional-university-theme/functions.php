@@ -130,6 +130,11 @@ function ourHeaderUrl() {
 // we need to manually run css on the login page
 function ourLoginCSS() {
   wp_enqueue_style('our-main-styles', get_theme_file_uri('/bundled-assets/styles.f38209763474fa90403d.css'));
+  wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+}
+
+function ourLoginTitle() {
+  return get_bloginfo('name');
 }
 
 
@@ -144,3 +149,4 @@ add_action('admin_init', 'redirectSubsToFrontend');
 add_action('wp_loaded', 'noSubsAdminBar');
 add_filter('login_headerurl', 'ourHeaderUrl');
 add_action('login_enqueue_scripts', 'ourLoginCSS');
+add_filter('login_headertitle', 'ourLoginTitle');

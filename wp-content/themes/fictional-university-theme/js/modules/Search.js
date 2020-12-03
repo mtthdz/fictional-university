@@ -26,6 +26,7 @@ class Search {
     this.searchField.on('keyup', this.typingLogic.bind(this));
   }
 
+  
   // methods
   openOverlay() {
     this.searchOverlay.addClass('search-overlay--active');
