@@ -8,6 +8,7 @@ class MyNotes {
   events() {
     $('.delete-note').on('click', this.deleteNote)
     $('.edit-note').on('click', this.editNote.bind(this));
+    $('.update-note').on('click', this.updateNote.bind(this));
   }
 
 
@@ -26,6 +27,29 @@ class MyNotes {
       },
       error: () => {
         console.log('nope'),
+        console.log(response);
+      }
+    })
+  }
+
+  updateNote(e) {
+    const thisNote = $(e.target).parents('li');
+    const ourUpdatedPost = {
+      'title': thisNote.find('.note-title-field').val(),
+      'content': thisNote.find('.note-body-field').val()
+    }
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
+      },
+      url: universityData.root_url + `/wp-json/wp/v2/note/${thisNote.data('id')}`,
+      type: 'POST',
+      data: ourUpdatedPost,
+      success: () => {
+        this.makeNoteReadOnly(thisNote);
+      },
+      error: () => {
         console.log(response);
       }
     })
