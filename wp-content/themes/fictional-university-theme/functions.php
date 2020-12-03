@@ -113,6 +113,14 @@ function redirectSubsToFrontend() {
   }
 }
 
+function noSubsAdminBar() {
+  $ourCurrentUser = wp_get_current_user();
+  
+  if(count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+    show_admin_bar(false);
+  }
+}
+
 // parameters: first when to call the fn, and then the fn
 // we dont use () for university_files because we're not running it here and now
 // php will handle the fn run
@@ -121,3 +129,4 @@ add_action('after_setup_theme', 'university_features');
 add_action('pre_get_posts', 'university_adjust_queries');
 add_action('rest_api_init', 'university_custom_rest');
 add_action('admin_init', 'redirectSubsToFrontend');
+add_action('wp_loaded', 'noSubsAdminBar');
