@@ -7,6 +7,8 @@ function university_post_types() {
   register_post_type('event', array(
     // we need to add rest api as the new block editor uses js; without this, we'd have the classic block editor
     'show_in_rest' => true, 
+    'capability_type' => 'event', // for members plugin
+    'map_meta_cap' => true, // requires permissions to edit event post types
     'supports' => array('title', 'editor', 'excerpt'),
     'rewrite' => array('slug' => 'events'),
     'has_archive' => true,
