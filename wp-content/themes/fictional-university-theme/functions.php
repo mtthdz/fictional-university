@@ -113,6 +113,7 @@ function redirectSubsToFrontend() {
   }
 }
 
+// remove admin bar for subscriber accounts
 function noSubsAdminBar() {
   $ourCurrentUser = wp_get_current_user();
   
@@ -120,6 +121,17 @@ function noSubsAdminBar() {
     show_admin_bar(false);
   }
 }
+
+// change login logo link to site, from wordpress.org
+function ourHeaderUrl() {
+  return esc_url(site_url('/'));
+}
+
+// we need to manually run css on the login page
+function ourLoginCSS() {
+  wp_enqueue_style('our-main-styles', get_theme_file_uri('/bundled-assets/styles.f38209763474fa90403d.css'));
+}
+
 
 // parameters: first when to call the fn, and then the fn
 // we dont use () for university_files because we're not running it here and now
@@ -130,3 +142,5 @@ add_action('pre_get_posts', 'university_adjust_queries');
 add_action('rest_api_init', 'university_custom_rest');
 add_action('admin_init', 'redirectSubsToFrontend');
 add_action('wp_loaded', 'noSubsAdminBar');
+add_filter('login_headerurl', 'ourHeaderUrl');
+add_action('login_enqueue_scripts', 'ourLoginCSS');
