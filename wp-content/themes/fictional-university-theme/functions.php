@@ -103,6 +103,16 @@ function university_custom_rest() {
 }
 
 
+// redirect subscriber accounts out of admin and onto homepage
+function redirectSubsToFrontend() {
+  $ourCurrentUser = wp_get_current_user();
+  
+  if(count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+    wp_redirect(site_url('/'));
+    exit;
+  }
+}
+
 // parameters: first when to call the fn, and then the fn
 // we dont use () for university_files because we're not running it here and now
 // php will handle the fn run
@@ -110,3 +120,4 @@ add_action('wp_enqueue_scripts', 'university_files');
 add_action('after_setup_theme', 'university_features');
 add_action('pre_get_posts', 'university_adjust_queries');
 add_action('rest_api_init', 'university_custom_rest');
+add_action('admin_init', 'redirectSubsToFrontend');
