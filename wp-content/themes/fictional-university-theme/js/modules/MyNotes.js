@@ -83,21 +83,24 @@ class MyNotes {
   }
 
 
+  // note: pushing a new post to wordpress will save it as a draft
   createNote(e) {
-    const ourUpdatedPost = {
+    const ourNewPost = {
       'title': $('.new-note-title').val(),
-      'content': $('.new-note-body').val()
+      'content': $('.new-note-body').val(),
+      'status': 'publish'
     }
 
     $.ajax({
       beforeSend: (xhr) => {
         xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
       },
-      url: universityData.root_url + `/wp-json/wp/v2/note/${thisNote.data('id')}`,
+      url: universityData.root_url + '/wp-json/wp/v2/note/',
       type: 'POST',
-      data: ourUpdatedPost,
+      data: ourNewPost,
       success: () => {
-        this.makeNoteReadOnly(thisNote);
+        $('.new-note-title, .new-note-body').val('');
+        $('<li></li>').prependTo('#my-notes').hide(),slideDown();
       },
       error: () => {
         console.log(response);
