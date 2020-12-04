@@ -9,6 +9,7 @@ class MyNotes {
     $('.delete-note').on('click', this.deleteNote)
     $('.edit-note').on('click', this.editNote.bind(this));
     $('.update-note').on('click', this.updateNote.bind(this));
+    $('.create-note').on('click', this.createNote.bind(this));
   }
 
 
@@ -80,6 +81,30 @@ class MyNotes {
     thisNote.find('.update-note').removeClass('update-note--visible');    
     thisNote.data('state', 'cancel');
   }
+
+
+  createNote(e) {
+    const ourUpdatedPost = {
+      'title': $('.new-note-title').val(),
+      'content': $('.new-note-body').val()
+    }
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
+      },
+      url: universityData.root_url + `/wp-json/wp/v2/note/${thisNote.data('id')}`,
+      type: 'POST',
+      data: ourUpdatedPost,
+      success: () => {
+        this.makeNoteReadOnly(thisNote);
+      },
+      error: () => {
+        console.log(response);
+      }
+    })
+  }
+  
   
 }
 
