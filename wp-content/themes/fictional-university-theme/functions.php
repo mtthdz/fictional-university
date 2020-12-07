@@ -138,9 +138,13 @@ function ourLoginTitle() {
   return get_bloginfo('name');
 }
 
-function makeNotePrivate($data) {
+function makeNotePrivate($data, $postarr) {
   // sanitize to prevent js attacks
-  if ($data['post_type'] == 'note') {
+  if($data['post_type'] == 'note') {
+    if(count_user_posts(get_current_user_id(), 'note') > 4 AND !$postarr['id']) {
+      die("You have reached your note post limit");
+    }
+
     $data['post_content'] = sanitize_textarea_field($data['post_content']);
     $data['post_title'] = sanitize_text_field($data['post_title']);
   }
@@ -165,4 +169,4 @@ add_action('wp_loaded', 'noSubsAdminBar');
 add_filter('login_headerurl', 'ourHeaderUrl');
 add_action('login_enqueue_scripts', 'ourLoginCSS');
 add_filter('login_headertitle', 'ourLoginTitle');
-add_filter('wp_insert_post_data', 'makeNotePrivate'); // force notes to be private posts
+add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2); // force notes to be private posts (10 = priority, 2 = amount of post arrays)
