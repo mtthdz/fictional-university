@@ -23,12 +23,15 @@ class MyNotes {
       },
       url: universityData.root_url + `/wp-json/wp/v2/note/${thisNote.data('id')}`,
       type: 'DELETE',
-      success: () => {
+      success: (response) => {
         thisNote.slideUp();
+        if(response.userNoteCount < 5) {
+          $('.note-limit-message').removeClass('active');
+        }
       },
-      error: () => {
-        console.log('nope'),
-        console.log(response);
+      error: (response) => {
+        console.log("Sorry")
+        console.log(response)
       }
     })
   }
@@ -47,11 +50,12 @@ class MyNotes {
       url: universityData.root_url + `/wp-json/wp/v2/note/${thisNote.data('id')}`,
       type: 'POST',
       data: ourUpdatedPost,
-      success: () => {
+      success: (response) => {
         this.makeNoteReadOnly(thisNote);
       },
-      error: () => {
-        console.log(response);
+      error: (response) => {
+        console.log("Sorry")
+        console.log(response)
       }
     })
   }
@@ -114,7 +118,9 @@ class MyNotes {
         .slideDown();
       },
       error: response => {
-        console.log(response);
+        if(response.responseText == "You have reached your note post limit") {
+          $(".note-limit-message").addClass('active');
+        }
       }
     })
   }
