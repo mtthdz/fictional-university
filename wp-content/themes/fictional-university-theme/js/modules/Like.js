@@ -13,7 +13,8 @@ class like {
   ourClickDispatcher(e) {
     const currentLikeBox = $(e.target).closest('.like-box');
 
-    if(currentLikeBox.data('exists') == 'yes') {
+    // to pull in live data (no refresh, use .attr)
+    if(currentLikeBox.attr('data-exists') == 'yes') {
       this.deleteLike(currentLikeBox);
     } else {
       this.createLike(currentLikeBox);
@@ -32,9 +33,10 @@ class like {
       success: (response) => {
         currentLikeBox.attr('data-exists', 'yes');
         let likeCount = parseInt(currentLikeBox.find('.like-count').html(), 10);
+
         likeCount++;
         currentLikeBox.find('.like-count').html(likeCount);
-        console.log(response);
+        currentLikeBox.attr('data-like', response);
       },
       error: (response) => {
         console.log(response);
@@ -44,10 +46,20 @@ class like {
 
   deleteLike(currentLikeBox) {
     $.ajax({
+      // required nonce for wordpress api
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
+      },
       url: universityData.root_url + '/wp-json/university/v1/manageLike',
+      data: { 'like': currentLikeBox.attr('data-like') },
       type: 'DELETE',
       success: (response) => {
-        console.log(response);
+        currentLikeBox.attr('data-exists', 'no');
+        let likeCount = parseInt(currentLikeBox.find('.like-count').html(), 10);
+
+        likeCount--;
+        currentLikeBox.find('.like-count').html(likeCount);
+        currentLikeBox.attr('data-like', '');
       },
       error: (response) => {
         console.log(response);
