@@ -77,6 +77,22 @@ function university_post_types() {
     ),
     'menu_icon' => 'dashicons-welcome-write-blog'
   ));    
+
+  // like post type
+  register_post_type('like', array(
+    // we need to add rest api as the new block editor uses js; without this, we'd have the classic block editor
+    'supports' => array('title'),
+    'public' => false,
+    'show_ui' => true, // for admin dashboard
+    'labels' => array(
+      'name' => 'Likes',
+      'add_new_item' => 'Add New Like',
+      'edit_item' => 'Edit Like',
+      'all_items' => 'All Likes',
+      'singular_name' => 'Likes'
+    ),
+    'menu_icon' => 'dashicons-heart'
+  ));      
 }
 
 add_action('init', 'university_post_types');

@@ -50,8 +50,8 @@ function university_files() {
     wp_enqueue_script('main-university-js', 'http://localhost:3000/bundled.js', NULL, '1.0', true);
   } else {
     wp_enqueue_script('our-vendors-js', get_theme_file_uri('/bundled-assets/vendors~scripts.9678b4003190d41dd438.js'), NULL, '1.0', true);
-    wp_enqueue_script('main-university-js', get_theme_file_uri('/bundled-assets/scripts.c4f5b8a3039a837eb1c2.js'), NULL, '1.0', true);
-    wp_enqueue_style('our-main-styles', get_theme_file_uri('/bundled-assets/styles.c4f5b8a3039a837eb1c2.css'));
+    wp_enqueue_script('main-university-js', get_theme_file_uri('/bundled-assets/scripts.77eea9fc0426d98f6998.js'), NULL, '1.0', true);
+    wp_enqueue_style('our-main-styles', get_theme_file_uri('/bundled-assets/styles.77eea9fc0426d98f6998.css'));
   }
 
   // for REST API call
@@ -134,7 +134,7 @@ function ourHeaderUrl() {
 
 // we need to manually run css on the login page
 function ourLoginCSS() {
-  wp_enqueue_style('our-main-styles', get_theme_file_uri('/bundled-assets/styles.c4f5b8a3039a837eb1c2.css'));
+  wp_enqueue_style('our-main-styles', get_theme_file_uri('/bundled-assets/styles.77eea9fc0426d98f6998.css'));
   wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
 }
 
@@ -143,10 +143,9 @@ function ourLoginTitle() {
 }
 
 function makeNotePrivate($data, $postarr) {
-  // sanitize to prevent js attacks
-  if($data['post_type'] == 'note') {
+  if ($data['post_type'] == 'note') {
     if(count_user_posts(get_current_user_id(), 'note') > 4 AND !$postarr['ID']) {
-      die("You have reached your note post limit");
+      die("You have reached your note limit.");
     }
 
     $data['post_content'] = sanitize_textarea_field($data['post_content']);

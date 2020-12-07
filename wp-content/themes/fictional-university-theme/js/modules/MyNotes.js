@@ -54,7 +54,6 @@ class MyNotes {
         this.makeNoteReadOnly(thisNote);
       },
       error: (response) => {
-        console.log("Sorry")
         console.log(response)
       }
     })
@@ -62,14 +61,12 @@ class MyNotes {
 
   editNote(e) {
     // note the .bind in the constructor
-    const thisNote = $(e.target).parents('li');
-    
-    if(thisNote.data('state') == 'editable') {
-      this.makeNoteReadOnly(thisNote);
+    const thisNote = $(e.target).parents("li")
+    if (thisNote.data("state") == "editable") {
+      this.makeNoteReadOnly(thisNote)
     } else {
-      this.makeNoteEditable(thisNote);
+      this.makeNoteEditable(thisNote)
     }
-
   }
 
   makeNoteEditable(thisNote) {
