@@ -62,6 +62,8 @@ function university_post_types() {
   // note post type
   register_post_type('note', array(
     // we need to add rest api as the new block editor uses js; without this, we'd have the classic block editor
+    'capability_type' => 'note',
+    'map_meta_cap' => true,
     'show_in_rest' => true,
     'supports' => array('title', 'editor'),
     'public' => false,
