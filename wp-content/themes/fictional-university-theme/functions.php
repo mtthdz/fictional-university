@@ -139,6 +139,13 @@ function ourLoginTitle() {
 }
 
 function makeNotePrivate($data) {
+  // sanitize to prevent js attacks
+  if($data['post_type'] == 'note') {
+    $data['post_content'] = sanitize_testarea_field($data['post_content']);
+    $data['post_title'] = sanitize_test_field($data['post_title']);
+  }
+
+  // automatically sets notes to private
   if($data['post_type'] == 'note' AND $data['post_status'] != 'trash') {
     $data['post_status'] = 'private';
     return $data;
