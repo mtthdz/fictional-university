@@ -19,17 +19,22 @@
  */
 
 // ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define( 'DB_NAME', 'local' );
 
-/** MySQL database username */
-define( 'DB_USER', 'root' );
+if(strstr($_SERVER['SERVER_NAME'], 'fictional-university.local')) {
+	// local reqs
+	define( 'DB_NAME', 'local' );
+	define( 'DB_USER', 'root' );
+	define( 'DB_PASSWORD', 'root' );
+	define( 'DB_HOST', 'localhost' );
 
-/** MySQL database password */
-define( 'DB_PASSWORD', 'root' );
+} else {
+	// hosting reqs
+	define( 'DB_NAME', 'db9ybm7cmgewkm' );
+	define( 'DB_USER', 'uvcpwpk4628wm' );
+	define( 'DB_PASSWORD', 'thisisatest123!' );
+	define( 'DB_HOST', '127.0.0.1' );
+}
 
-/** MySQL hostname */
-define( 'DB_HOST', 'localhost' );
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
