@@ -160,6 +160,11 @@ function makeNotePrivate($data, $postarr) {
   return $data;
 }
 
+function ignoreCertainFiles() {
+  $exclude_filters[] = 'themes/fictional-university-theme/node_modules';
+  return $exclude_filters;
+}
+
 
 // parameters: first when to call the fn, and then the fn
 // we dont use () for university_files because we're not running it here and now
@@ -174,3 +179,4 @@ add_filter('login_headerurl', 'ourHeaderUrl');
 add_action('login_enqueue_scripts', 'ourLoginCSS');
 add_filter('login_headertitle', 'ourLoginTitle');
 add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2); // force notes to be private posts (10 = priority, 2 = amount of post arrays)
+add_filter('ai1wm_exclude_content_from_export', 'ignoreCertainFiles');
